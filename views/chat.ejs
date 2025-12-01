@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ChatGPT Clone</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .chat-container {
+        background: white;
+        width: 600px;
+        max-width: 90%;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .messages {
+        flex-grow: 1;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fafafa;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .msg {
+        margin: 8px 0;
+        padding: 8px 12px;
+        border-radius: 12px;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+
+      .user {
+        background: #d0ebff;
+        align-self: flex-end;
+        text-align: right;
+      }
+
+      .bot {
+        background: #e2ffd8;
+        align-self: flex-start;
+      }
+
+      form {
+        display: flex;
+        gap: 10px;
+      }
+
+      input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: none;
+        background-color: #4a90e2;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #357ab8;
+      }
+
+      .clear-btn {
+        background-color: #e24a4a;
+      }
+
+      .clear-btn:hover {
+        background-color: #b83535;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <h2>ChatGPT Clone</h2>
+
+      <div class="messages">
+        <% history.forEach((msg) => { %>
+        <div class="msg <%= msg.role %>">
+          <strong><%= msg.role === "user" ? "You" : "Bot" %>:</strong> <%=
+          msg.content %>
+        </div>
+        <% }) %>
+      </div>
+
+      <form action="/send" method="POST">
+        <input
+          type="text"
+          name="message"
+          placeholder="Type your message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+
+      <form action="/clear" method="POST" style="margin-top: 10px">
+        <button type="submit" class="clear-btn">Clear Chat</button>
+      </form>
+    </div>
+  </body>
+</html>
