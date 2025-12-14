@@ -52,7 +52,7 @@
         text-align: right;
       }
 
-      .bot {
+      .assistant {
         background: #e2ffd8;
         align-self: flex-start;
       }
@@ -91,6 +91,14 @@
       .clear-btn:hover {
         background-color: #b83535;
       }
+
+      .upload-btn {
+        background-color: #4caf50;
+      }
+
+      .upload-btn:hover {
+        background-color: #388e3c;
+      }
     </style>
   </head>
   <body>
@@ -98,15 +106,15 @@
       <h2>ChatGPT Clone</h2>
 
       <div class="messages">
-        <% history.forEach((msg) => { %>
-        <div class="msg <%= msg.role %>">
-          <strong><%= msg.role === "user" ? "You" : "Bot" %>:</strong> <%=
-          msg.content %>
+        <% messages.forEach((msg) => { %>
+        <div class="msg <%= msg.role === 'assistant' ? 'assistant' : 'user' %>">
+          <strong><%= msg.role === "user" ? "You" : "Bot" %>:</strong>
+          <%= msg.content %>
         </div>
         <% }) %>
       </div>
 
-      <form action="/send" method="POST">
+      <form action="/chat" method="POST">
         <input
           type="text"
           name="message"
@@ -116,9 +124,18 @@
         <button type="submit">Send</button>
       </form>
 
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="document" required />
+        <button type="submit" class="upload-btn">Upload File</button>
+      </form>
+
       <form action="/clear" method="POST" style="margin-top: 10px">
         <button type="submit" class="clear-btn">Clear Chat</button>
       </form>
+
+      <% if (error) { %>
+      <p style="color: red"><%= error %></p>
+      <% } %>
     </div>
   </body>
 </html>
